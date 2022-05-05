@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Form</h1>
+<form action="#" th:action="@{/media}" th:object="${mediaForm}" method="post">
+    <table border="1">
+        <tr>
+            <td><label>Title</label></td>
+            <td><input type="text" th:field="*{title}" /></td>
+            <td th:if="${#fields.hasErrors('title')}">Titre invalide</td>
+        </tr>
+        <tr>
+            <td><label>Author</label></td>
+            <td><input type="text" th:field="*{author}" /></td>
+            <td th:if="${#fields.hasErrors('author')}">Auteur invalide</td>
+        </tr>
+        <tr>
+            <td><label>Editeur</label></td>
+            <td><input type="text" th:field="*{editor}" /></td>
+            <td th:if="${#fields.hasErrors('editor')}">Editeur invalide</td>
+        </tr>
+        <tr>
+            <td><label>Exemplaires</label></td>
+            <td><input type="text" th:field="*{exemplaires}" /></td>
+            <td th:if="${#fields.hasErrors('exemplaires')}">Exemplaires invalide</td>
+        </tr>
+        <tr>
+            <td><label>Année</label></td>
+            <td><input type="text" th:field="*{releaseYear}" /></td>
+            <td th:if="${#fields.hasErrors('releaseYear')}">Année invalide</td>
+        </tr>
+        <tr>
+            <td><label>Length</label></td>
+            <td><input type="text" th:field="*{length}" /></td>
+            <td th:if="${#fields.hasErrors('length')}">Pages invalide</td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Sauve" /></td>
+        </tr>
+    </table>
+</form>
+<a th:href="@{'/medias'}">Retour</a>
+</body>
+</html>

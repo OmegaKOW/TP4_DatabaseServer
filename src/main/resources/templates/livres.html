@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Livres</title>
+</head>
+<body>
+<h1>Page Livres</h1>
+<table>
+    <thead>
+        <th>Titre</th>
+        <th>Auteur</th>
+        <th>Editeur</th>
+        <th>Exemplaires</th>
+        <th>Année de parution</th>
+        <th>Genre</th>
+        <th>Nb de pages</th>
+    </thead>
+    <tbody>
+        <th:block th:each="livre, stat : ${livres}">
+            <tr>
+                <td th:text="${livre.getTitle()}">Lacou</td>
+                <td th:text="${livre.getAuthor()}">Lacou</td>
+                <td th:text="${livre.getEditor()}">Lacou</td>
+                <td th:text="${livre.getExemplaires()}">10</td>
+                <td th:text="${livre.getReleaseYear()}">1990</td>
+                <td th:text="${livre.getGenre()}">Comédie</td>
+                <td th:text="${livre.getNbPages()}">Lacou</td>
+            </tr>
+        </th:block>
+    </tbody>
+</table>
+<a th:href="@{'/livre'}">New Livre</a>
+<br>
+<a th:href="@{'/getDocumentWithTitle'}">Emprunter</a>
+<br>
+<a th:href="@{'/documents'}">Retour</a>
+</body>
+</html>

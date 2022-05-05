@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Emprunt de document</title>
+</head>
+<body>
+<form action="#" th:action="@{/getDocumentWithTitle}" th:object="${documentForm}" method="post">
+    <table>
+        <tr>
+            <td><label>Titre :</label></td>
+            <td><input type="text" th:field="*{title}" /></td>
+            <td th:if="${#fields.hasErrors('title')}">Titre invalide</td>
+        </tr>
+
+        <tr>
+            <td><label>Votre ID :</label></td>
+            <td><input type="text" th:field="*{clientId}" /></td>
+            <td th:if="${#fields.hasErrors('clientId')}">Id invalide</td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
