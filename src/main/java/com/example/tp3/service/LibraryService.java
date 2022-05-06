@@ -188,4 +188,12 @@ public class LibraryService {
     public Document saveDocument(Document newDocument) {
         return documentRepository.save(newDocument);
     }
+
+    public void removeClient(Client c){
+        clientRepository.delete(c);
+    }
+
+    public void removeDocument(Document d) {
+        documentRepository.delete(d);
+    }
 }

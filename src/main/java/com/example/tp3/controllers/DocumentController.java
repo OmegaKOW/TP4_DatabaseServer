@@ -42,6 +42,14 @@ public class DocumentController {
         return libraryService.saveLivre(newDocument);
     }
 
+    @DeleteMapping("/document/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public void documentDelete(@PathVariable("id") String id) {
+        logger.info("post - createClient " + id);
+        Document d = libraryService.findDocumentWithId(getIdFromString(id)).get();
+        libraryService.removeDocument(d);
+    }
+
     @GetMapping("/livres")
     @CrossOrigin(origins = "http://localhost:3000")
     public List<Livre> getAllLivres() {
@@ -61,5 +69,20 @@ public class DocumentController {
     public Document livreSubmit(@RequestBody Livre newDocument) {
         logger.info("post - createClient " + newDocument);
         return libraryService.saveLivre(newDocument);
+    }
+
+    @DeleteMapping("/livre/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public void livreDelete(@PathVariable("id") String id) {
+        logger.info("post - createClient " + id);
+        Document d = libraryService.findDocumentWithId(getIdFromString(id)).get();
+        libraryService.removeDocument(d);
+    }
+
+    private long getIdFromString(String id) {
+        try {
+            return Long.parseLong(id);
+        } catch(NumberFormatException e) {}
+        return 0;
     }
 }

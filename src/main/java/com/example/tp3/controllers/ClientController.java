@@ -43,4 +43,19 @@ public class ClientController {
         logger.info("post - createClient " + newClient);
         return libraryService.saveClient(newClient);
     }
+
+    @DeleteMapping("/client/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public void clientDelete(@PathVariable("id") String str) {
+        logger.info("post - deleteClient " + str);
+        Client c = libraryService.findClientWithId(getIdFromString(str)).get();
+        libraryService.removeClient(c);
+    }
+
+    private long getIdFromString(String id) {
+        try {
+            return Long.parseLong(id);
+        } catch(NumberFormatException e) {}
+        return 0;
+    }
 }
