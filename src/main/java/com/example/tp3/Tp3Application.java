@@ -29,8 +29,9 @@ public class Tp3Application implements CommandLineRunner {
         System.out.println(libraryService.findByIdWithAll(c1Id));
         System.out.println(libraryService.findDocumentWithId(l1Id).get());
 
+        libraryService.borrowDocument(c1Id, l1Id);
         System.out.println(libraryService.getEmprunts(c1Id));
-
+        libraryService.returnDocument(l1Id, c1Id);
         System.out.println(libraryService.findByIdWithAll(c1Id));
 
     }

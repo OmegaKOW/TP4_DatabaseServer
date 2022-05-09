@@ -2,12 +2,11 @@ package com.example.tp3.models.library;
 
 
 import com.example.tp3.models.users.Client;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 
@@ -23,6 +22,7 @@ public class Emprunt {
     @Id
     @GeneratedValue
     private long id;
+
 
     @OneToOne
     private Client client;

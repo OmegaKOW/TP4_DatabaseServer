@@ -4,6 +4,7 @@ import com.example.tp3.models.library.Dette;
 import com.example.tp3.models.library.Document;
 import com.example.tp3.models.library.Emprunt;
 import com.example.tp3.models.library.Livre;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.http.ResponseEntity;
 
@@ -37,10 +38,11 @@ public class Client {
 
 
 
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Emprunt> emprunts = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Dette> dettes = new HashSet<>();
 

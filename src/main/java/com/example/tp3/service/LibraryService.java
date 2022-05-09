@@ -42,12 +42,9 @@ public class LibraryService {
     public List<Document> findDocumentWithTitle(String title){
         return documentRepository.findDocumentWithTitle(title);
     }
-
-
     public List<Document> findDocumentWithAuthor(String author){
         return documentRepository.findDocumentWithAuthor(author);
     }
-
 
     public List<Document> findDocumentWithYear(int year){
         return documentRepository.findDocumentWithYear(year);
@@ -57,13 +54,6 @@ public class LibraryService {
     public List<Document> findDocumentWithCategory(String category){
         return documentRepository.findDocumentWithCategory(category);
     }
-
-
-
-
-
-
-
 
     //Client
     public Client saveClient(String name, String address){
@@ -93,7 +83,6 @@ public class LibraryService {
         Document document = documentRepository.findById(documentId).get();
         Client client = clientRepository.findById(clientId).get();
         client.setDettes(clientRepository.findByIdWithFines(clientId).getDettes());
-
         if(document.getExemplaires() < 1){throw new Exception("Erreur");}
         if(client.isHasDebt()){
             throw new Exception("Error");
@@ -103,10 +92,6 @@ public class LibraryService {
                 throw new Exception("Document déjà dans votre liste d'emprunt");
             }
         }
-
-
-
-
         document.setExemplaires(document.getExemplaires() - 1);
         documentRepository.save(document);
         Emprunt emprunt = Emprunt.builder().doc(document).client(client).dateDeRetour(LocalDate.now().minusDays(1)).build();
@@ -158,8 +143,8 @@ public class LibraryService {
         return mediaRepository.findAll();
     }
 
-    public void saveMedia(Media media) {
-        mediaRepository.save(media);
+    public Document saveMedia(Media media) {
+        return mediaRepository.save(media);
     }
 
     public Optional<Client> findClientWithId(long id) {
@@ -177,8 +162,9 @@ public class LibraryService {
     public Document findDocumentWithTitleTop(String title) { return documentRepository.findDocumentWithTitle(title).get(0);
 
     }
-    public Set<Dette> getDettesWithClientId(long id){
-        return clientRepository.findByIdWithFines(id).getDettes();
+    public List<Dette> getDettesWithClientId(long id){
+        List<Dette> dettes = new ArrayList<>(clientRepository.findByIdWithFines(id).getDettes());
+        return dettes;
     }
 
     public List<Document> getDocuments(){
@@ -195,5 +181,9 @@ public class LibraryService {
 
     public void removeDocument(Document d) {
         documentRepository.delete(d);
+    }
+
+    public List<Client> getClientsAndFines(){
+        return clientRepository.findAllWithFines();
     }
 }

@@ -2,6 +2,7 @@ package com.example.tp3.controllers;
 
 import com.example.tp3.models.library.Document;
 import com.example.tp3.models.library.Livre;
+import com.example.tp3.models.library.Media;
 import com.example.tp3.models.users.Client;
 import com.example.tp3.service.LibraryService;
 import org.slf4j.Logger;
@@ -74,6 +75,35 @@ public class DocumentController {
     @DeleteMapping("/livre/{id}")
     @CrossOrigin(origins = "http://localhost:3000")
     public void livreDelete(@PathVariable("id") String id) {
+        logger.info("post - createClient " + id);
+        Document d = libraryService.findDocumentWithId(getIdFromString(id)).get();
+        libraryService.removeDocument(d);
+    }
+
+    @GetMapping("/medias")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Media> getAllMedias() {
+        logger.info("getAllMedias");
+        return libraryService.getMedias();
+    }
+
+    @GetMapping("/media")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Media> getAMedia() {
+        logger.info("get a book");
+        return libraryService.getMedias();
+    }
+
+    @PostMapping("/media")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Document mediaSubmit(@RequestBody Media newDocument) {
+        logger.info("post - createMedia " + newDocument);
+        return libraryService.saveMedia(newDocument);
+    }
+
+    @DeleteMapping("/media/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public void mediaDelete(@PathVariable("id") String id) {
         logger.info("post - createClient " + id);
         Document d = libraryService.findDocumentWithId(getIdFromString(id)).get();
         libraryService.removeDocument(d);

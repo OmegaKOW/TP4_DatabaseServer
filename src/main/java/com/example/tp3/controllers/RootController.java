@@ -55,33 +55,7 @@ public class RootController {
     }
 
 
-    //---------------------------MÉDIA---------------------------------------------------------
 
-
-    @GetMapping("/medias")
-    public String getMedias(Model model) {
-        model.addAttribute("pageTitle", "Les medias");
-        var medias = libraryService.getMedias();
-        model.addAttribute("medias", medias);
-        return "medias";
-    }
-
-    @GetMapping("/media")
-    public String mediaForm(@ModelAttribute MediaForm mediaForm,BindingResult result, Model model) {
-        mediaForm = new MediaForm(new Media());
-        model.addAttribute("mediaForm", mediaForm);
-        return "media";
-    }
-
-    @PostMapping("/media")
-    public String mediaSubmit(@Valid @ModelAttribute MediaForm media,BindingResult errors, Model model) {
-        if(errors.hasErrors()){
-            return "media";
-        }
-        libraryService.saveMedia(media.toMedia());
-        model.addAttribute("media", media);
-        return "resultatMedia";
-    }
 
 
     //----------------EMPRUNTS-----------------------
@@ -235,7 +209,7 @@ public class RootController {
 
 
         redirectAttributes.addFlashAttribute("empruntGetForm",empruntGetForm);
-        Set<Dette> dettes = libraryService.getDettesWithClientId(getIdFromString(empruntGetForm.getId()));
+        List<Dette> dettes = libraryService.getDettesWithClientId(getIdFromString(empruntGetForm.getId()));
         redirectAttributes.addAttribute("id", empruntGetForm.getId());
         redirectAttributes.addAttribute("dettes", dettes);
 
@@ -250,7 +224,7 @@ public class RootController {
     public String getDettesWithClientId(Model model, @ModelAttribute EmpruntForm empruntForm, @PathVariable("id") String id){
         logger.info("Id: " + id);
         long clientId = getIdFromString(id);
-        final Set<Dette> dettes = libraryService.getDettesWithClientId(clientId);
+        final List<Dette> dettes = libraryService.getDettesWithClientId(clientId);
         model.addAttribute("dettes", dettes);
         return "showDettes";
     }

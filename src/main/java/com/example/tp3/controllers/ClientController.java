@@ -1,5 +1,8 @@
 package com.example.tp3.controllers;
 
+import com.example.tp3.models.library.Dette;
+import com.example.tp3.models.library.Document;
+import com.example.tp3.models.library.Emprunt;
 import com.example.tp3.models.users.Client;
 import com.example.tp3.service.LibraryService;
 import org.slf4j.Logger;
@@ -34,7 +37,7 @@ public class ClientController {
     @CrossOrigin(origins = "http://localhost:3000")
     public List<Client> getAClient() {
         logger.info("get a client");
-        return libraryService.getClients();
+        return libraryService.getClientsAndFines();
     }
 
     @PostMapping("/client")
@@ -50,6 +53,40 @@ public class ClientController {
         logger.info("post - deleteClient " + str);
         Client c = libraryService.findClientWithId(getIdFromString(str)).get();
         libraryService.removeClient(c);
+    }
+
+    @GetMapping("/emprunts/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Emprunt> getEmprunts(@PathVariable("id") String id) {
+        logger.info("getAllClients");
+        return libraryService.getEmprunts(getIdFromString(id));
+    }
+
+    @GetMapping("/dettes/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Dette> getDettes(@PathVariable("id") String id) {
+        logger.info("getAllClients");
+        return libraryService.getDettesWithClientId(getIdFromString(id));
+    }
+
+    @GetMapping("/payer/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public void payerDettes(@PathVariable("id") String id) {
+        logger.info("getAllClients");
+        libraryService.payDebts(getIdFromString(id));
+    }
+
+    @GetMapping("/emprunter/{clientId}/{bookId}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public void emprunterDocument(@PathVariable("clientId") String clientId, @PathVariable("bookId") String bookId) {
+        logger.info("Client " + clientId + " emprunte document " + bookId);
+        try{
+            libraryService.borrowDocument(getIdFromString(clientId), getIdFromString(bookId));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private long getIdFromString(String id) {
