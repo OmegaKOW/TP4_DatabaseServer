@@ -89,6 +89,19 @@ public class ClientController {
 
     }
 
+    @GetMapping("/retourner/{clientId}/{bookId}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public void retournerDocument(@PathVariable("clientId") String clientId, @PathVariable("bookId") String bookId) {
+        logger.info("Client " + clientId + " retourne document " + bookId);
+        try{
+            libraryService.returnDocument(getIdFromString(bookId), getIdFromString(clientId));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     private long getIdFromString(String id) {
         try {
             return Long.parseLong(id);
